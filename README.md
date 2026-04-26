@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="logo.png" alt="TUSKRES Logo" width="200">
+  <img src="public/logo.png" alt="TUSKRES Logo" width="200">
 </p>
 
 # 🐘 TUSKRES - Rescuing Tuskers 🛡️
