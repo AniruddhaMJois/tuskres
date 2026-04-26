@@ -1,5 +1,7 @@
 # 🐘 TUSKRES - Rescuing Tuskers 🛡️
 
+**Team: THE POWER OF 5 A'S** 🚀
+
 **TUSKRES** is a modern, high-tech early warning system designed to mitigate human-elephant conflict in sensitive zones. By providing real-time monitoring and rapid communication channels for forest officials and civilians, TUSKRES aims to create safer communities for both humans and elephants.
 
 ---
@@ -62,4 +64,4 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ---
 
-Developed with ❤️ for a safer coexistence. 🐘🛡️
+Developed with ❤️ by **Team THE POWER OF 5 A'S** for a safer coexistence. 🐘🛡️
