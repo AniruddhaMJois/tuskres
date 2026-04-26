@@ -614,27 +614,27 @@ body.light-theme .tile {
 }
 
 .tile-thermal-1 {
-  background-image: url("a1.png");
+  background-image: url("../public/a1.png");
 }
 
 .tile-thermal-2 {
-  background-image: url("a2.jpg");
+  background-image: url("../public/a2.jpg");
 }
 
 .tile-thermal-3 {
-  background-image: url("a3.jpg");
+  background-image: url("../public/a3.jpg");
 }
 
 .tile-thermal-4 {
-  background-image: url("a4.jpg");
+  background-image: url("../public/a4.jpg");
 }
 
 .tile-thermal-5 {
-  background-image: url("a5.jpg");
+  background-image: url("../public/a5.jpg");
 }
 
 .tile-elephant {
-  background-image: url("a6.jpg");
+  background-image: url("../public/a6.jpg");
   border: 2px solid #f44336;
   box-shadow: 0 0 12px rgba(244, 67, 54, 0.9);
 }
