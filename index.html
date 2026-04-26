@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TUSKRES - Rescuing Tuskers</title>
+    <link rel="stylesheet" href="style.css">
+
+  </head>
+  <body>
+    <div class="app-shell">
+      <div class="top-bar">
+        <div class="nav-buttons">
+          <button class="nav-btn" id="back-btn">
+            <span class="icon">←</span><span id="back-text">Back</span>
+          </button>
+          <button class="nav-btn" id="home-btn">
+            <span class="icon">⌂</span><span id="home-text">Home</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="app-brand">
+        <div class="brand-row">
+          <img src="logo.png" alt="TUSKRES logo" style="height:100px;" />
+          <div class="app-name">TUSKRES - Rescuing Tuskers</div>
+          <!-- NEW logout button -->
+          <button id="logout-btn" class="logout-btn" style="display: none;">
+            Logout
+          </button>
+        </div>
+        <div class="app-brand-sub" id="brand-sub">
+          Early alerts for human–elephant conflict zones
+        </div>
+        <div class="lang-row">
+          <button class="lang-btn active" data-lang="en">English</button>
+          <button class="lang-btn" data-lang="kn">ಕನ್ನಡ</button>
+          <button class="lang-btn" data-lang="hi">हिन्दी</button>
+          <div class="theme-toggle">
+            <span class="label" id="theme-label-text">Dark</span>
+            <label class="switch">
+              <input type="checkbox" id="theme-switch" checked />
+              <span class="slider"></span>
+            </label>
+          </div>
+        </div>
+        <!-- zone title just under language row -->
+        <div id="zone-title" class="zone-title-bar"></div>
+      </div>
+
+      <div class="screens">
+        <section class="screen active" id="screen-roles" data-prev="">
+          <header class="app-header">
+            <div class="app-title" id="screen-title">
+              How are you using this app today?
+            </div>
+            <div class="app-subtitle" id="screen-subtitle">
+              Select your role to continue.
+            </div>
+          </header>
+          <section class="choices">
+            <article
+              class="card"
+              id="officer-card"
+              data-role="Forest Officer"
+            >
+              <div class="card-badge" id="officer-badge-text">Official</div>
+              <h2 class="card-title" id="officer-title">Forest Officer</h2>
+              <p class="card-subtitle" id="officer-desc">
+                View live alerts, patrol routes, and respond to reports from
+                villagers.
+              </p>
+              <div class="card-footer">
+                <span class="tag" id="officer-tag">Secure login</span>
+                <span class="indicator">
+                  <span class="indicator-dot"></span>
+                  <span id="officer-indicator">On duty</span>
+                </span>
+              </div>
+            </article>
+            <article class="card" id="civilian-card" data-role="Civilian">
+              <div
+                class="card-badge"
+                style="
+                  background: rgba(21, 101, 192, 0.18);
+                  border-color: rgba(100, 181, 246, 0.8);
+                  color: #bbdefb;
+                "
+                id="civil-badge"
+              >
+                Public
+              </div>
+              <h2 class="card-title" id="civilian-title">Civilian</h2>
+              <p class="card-subtitle" id="civilian-desc">
+                Report elephant sightings, danger zones, or crop damage from
+                your village.
+              </p>
+              <div class="card-footer">
+                <span
+                  class="tag"
+                  style="
+                    background: rgb(123, 175, 227);
+                    color: #062137;
+                  "
+                  id="civilian-tag"
+                >
+                  Quick report
+                </span>
+                <span class="indicator">
+                  <span
+                    class="indicator-dot"
+                    style="
+                      background: #29b6f6;
+                      box-shadow: 0 0 6px rgba(41, 182, 246, 0.8);
+                    "
+                  ></span>
+                  <span id="civilian-indicator">Safe mode</span>
+                </span>
+              </div>
+            </article>
+          </section>
+
+          <section class="cta">
+            <button id="continue-btn" class="cta-button" disabled>
+              Continue
+            </button>
+            <div id="role-output" class="role-output"></div>
+          </section>
+        </section>
+
+        <section
+          class="screen"
+          id="screen-officer-login"
+          data-prev="screen-roles"
+        >
+          <header class="app-header">
+            <div class="app-title" id="officer-login-title">
+              Forest Officer Login
+            </div>
+            <div class="app-subtitle" id="officer-login-sub">
+              Enter your 8-digit ID and password.
+            </div>
+          </header>
+          <form class="form" onsubmit="return false;">
+            <div class="form-group">
+              <label id="officer-id-label" for="officer-id"
+                >Official ID (8 digits)</label
+              >
+              <input
+                id="officer-id"
+                type="text"
+                inputmode="numeric"
+                maxlength="8"
+                placeholder="XXXXXXXX"
+              />
+            </div>
+            <div class="form-group">
+              <label id="officer-pass-label" for="officer-pass">Password</label>
+              <div class="password-wrapper">
+                <input
+                  id="officer-pass"
+                  type="password"
+                  placeholder="Enter password"
+                />
+                <span class="eye-toggle" data-target="officer-pass">👁</span>
+              </div>
+            </div>
+            <div class="warning" id="officer-warning"></div>
+            <div class="link" id="officer-forgot">Forgot password?</div>
+          </form>
+          <section class="cta">
+            <button id="officer-login-btn" class="cta-button">
+              Login
+            </button>
+          </section>
+          <section class="cta">
+  <button id="officer-create-btn" class="cta-button" style="margin-top: 8px; background: #1565c0;">
+    Create account
+  </button>
+</section>
+        </section>
+ 
+        <section
+          class="screen"
+          id="screen-officer-forgot"
+          data-prev="screen-officer-login"
+        >
+          <header class="app-header">
+            <div class="app-title" id="officer-forgot-title">
+              Reset Officer Password
+            </div>
+            <div class="app-subtitle" id="officer-forgot-sub">
+              Enter your 8-digit official ID.
+            </div>
+          </header>
+          <form class="form" onsubmit="return false;">
+            <div class="form-group">
+              <label id="officer-forgot-id-label" for="officer-forgot-id"
+                >Official ID</label
+              >
+              <input
+                id="officer-forgot-id"
+                type="text"
+                inputmode="numeric"
+                maxlength="8"
+                placeholder="XXXXXXXX"
+              />
+            </div>
+            <div class="warning" id="officer-forgot-msg"></div>
+          </form>
+          <section class="cta">
+            <button id="officer-forgot-btn" class="cta-button">
+              NEXT
+            </button>
+          </section>
+        </section>
+
+        <section
+          class="screen"
+          id="screen-officer-home"
+          data-prev="screen-officer-login"
+        >
+          <header class="app-header">
+            <div class="app-title" id="officer-home-title">
+              Officer Dashboard
+            </div>
+            <div class="app-subtitle" id="officer-home-sub">
+              Live thermal feeds from patrol zones.
+            </div>
+          </header>
+          <div class="gallery" id="officer-gallery">
+            <div
+              class="tile tile-thermal-1"
+              data-zone="1"
+              data-thermal="a1.png"
+              data-rgb="a1_rgb.jpg"
+              data-spec="sr.png"
+              data-audio="zone.mp3"
+            >
+              <span class="tile-label" id="tile-label-1">Thermal feed 1</span>
+            </div>
+            <div
+              class="tile tile-thermal-2"
+              data-zone="2"
+              data-thermal="a2.jpg"
+              data-rgb="a2_rgb.jpg"
+              data-spec="sr.png"
+              data-audio="zone.mp3"
+            >
+              <span class="tile-label" id="tile-label-2">Thermal feed 2</span>
+            </div>
+            <div
+              class="tile tile-thermal-3"
+              data-zone="3"
+              data-thermal="a3.jpg"
+              data-rgb="a3_rgb.jpg"
+              data-spec="sr.png"
+              data-audio="zone.mp3"
+            >
+              <span class="tile-label" id="tile-label-3">Thermal feed 3</span>
+            </div>
+            <div
+              class="tile tile-thermal-4"
+              data-zone="4"
+              data-thermal="a4.jpg"
+              data-rgb="a4_rgb.jpg"
+              data-spec="sr.png"
+              data-audio="zone.mp3"
+            >
+              <span class="tile-label" id="tile-label-4">Thermal feed 4</span>
+            </div>
+            <div
+              class="tile tile-thermal-5"
+              data-zone="5"
+              data-thermal="a5.jpg"
+              data-rgb="a5_rgb.jpg"
+              data-spec="sr.png"
+              data-audio="zone.mp3"
+            >
+              <span class="tile-label" id="tile-label-5">Thermal feed 5</span>
+            </div>
+            <div
+              class="tile tile-elephant"
+              data-zone="6"
+              data-thermal="a6.jpg"
+              data-rgb="a6_rgb.jpg"
+              data-spec="sr.png"
+              data-audio="zone1.mp3"
+            >
+              <div class="warning-banner" id="ele-warning">
+                elephant entering warning
+              </div>
+              <span class="tile-label" id="tile-label-6">Thermal feed 6</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Zone detail screen -->
+        <section
+          class="screen"
+          id="screen-zone-feed"
+          data-prev="screen-officer-home"
+        >
+          <header class="app-header">
+            <div class="app-title" id="zone-main-title">Zone feed</div>
+            <div class="app-subtitle" id="zone-main-subtitle">
+              Detailed live view from this patrol zone.
+            </div>
+          </header>
+
+          <div class="zone-feed-content">
+            <div class="section-heading" id="zone-thermal-heading">
+              Thermal camera live footage
+            </div>
+            <img
+              id="zone-thermal-img"
+              src=""
+              alt="Thermal live feed"
+              class="zone-image"
+            />
+
+            <div class="section-heading" id="zone-rgb-heading">
+              Camera live footage
+            </div>
+            <img
+              id="zone-rgb-img"
+              src=""
+              alt="Camera live feed"
+              class="zone-image"
+            />
+
+            <div class="section-heading" id="zone-audio-heading">
+              Scaled up acoustic mic recording
+            </div>
+            <img
+              id="zone-spec-img"
+              src="sr.png"
+              alt="Acoustic spectrogram"
+              class="spectrogram"
+            />
+            <div class="audio-toggle">
+              <button id="audio-toggle-btn" type="button">🔇 Muted</button>
+              <span id="audio-status-text">Muted acoustic recordings</span>
+            </div>
+
+            <button id="send-warning-btn" class="warning-send-btn">
+              Send warning to this zone
+            </button>
+          </div>
+        </section>
+
+        <section
+          class="screen"
+          id="screen-civilian-login"
+          data-prev="screen-roles"
+        >
+          <header class="app-header">
+            <div class="app-title" id="civil-login-title">Civilian Login</div>
+            <div class="app-subtitle" id="civil-login-sub">
+              Enter your phone number and 6-digit PIN.
+            </div>
+          </header>
+          <form class="form" onsubmit="return false;">
+            <div class="form-group">
+              <label id="civil-phone-label" for="civil-phone"
+                >Phone number</label
+              >
+              <input
+                id="civil-phone"
+                type="tel"
+                inputmode="tel"
+                placeholder="10-digit mobile"
+              />
+            </div>
+            <div class="form-group">
+              <label id="civil-pin-label" for="civil-pin">PIN (6 digits)</label>
+              <div class="password-wrapper">
+                <input
+                  id="civil-pin"
+                  type="password"
+                  inputmode="numeric"
+                  maxlength="6"
+                  placeholder="••••••"
+                />
+                <span class="eye-toggle" data-target="civil-pin">👁</span>
+              </div>
+            </div>
+            <div class="warning" id="civil-warning"></div>
+            <div class="link" id="civil-forgot">Forgot PIN?</div>
+          </form>
+          <section class="cta">
+            <button id="civil-login-btn" class="cta-button">
+              Login
+            </button>
+          </section>
+          <section class="cta">
+  <button id="civil-create-btn" class="cta-button" style="margin-top: 8px; background: #1565c0;">
+    Create account
+  </button>
+</section>
+
+        </section>
+         
+        <section
+          class="screen"
+          id="screen-civilian-forgot"
+          data-prev="screen-civilian-login"
+        >
+          <header class="app-header">
+            <div class="app-title" id="civil-forgot-title">Reset civilian PIN</div>
+            <div class="app-subtitle" id="civil-forgot-sub">
+              Enter your registered phone number.
+            </div>
+          </header>
+          <form class="form" onsubmit="return false;">
+            <div class="form-group">
+              <label
+                id="civil-forgot-phone-label"
+                for="civil-forgot-phone"
+                >Phone number</label
+              >
+              <input
+                id="civil-forgot-phone"
+                type="tel"
+                inputmode="tel"
+                placeholder="10-digit mobile"
+              />
+            </div>
+            <div class="warning" id="civil-forgot-msg"></div>
+          </form>
+          <section class="cta">
+            <button id="civil-forgot-btn" class="cta-button">
+              NEXT
+            </button>
+          </section>
+        </section>
+
+        <section
+          class="screen"
+          id="screen-civilian-home"
+          data-prev="screen-civilian-login"
+        >
+          <div class="yellow-home">
+            <h2 id="yellow-title">Civilian Home</h2>
+            <p id="yellow-text">
+              You are logged in. Use this screen later to show live warnings and
+              safety tips.
+            </p>
+
+            <!-- NEW: elephant warning (hidden initially) -->
+            <div
+              id="civil-ele-warning"
+              class="civil-ele-warning"
+              style="display: none;"
+            >
+              <img
+                src="download.jpg"
+                alt="Elephant warning"
+                class="civil-ele-icon"
+              />
+              <span class="civil-ele-text">ELEPHANT FOUND NEAR YOUR AREA</span>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+<!-- Create account modal (officer + civilian) -->
+<div id="create-modal-backdrop" class="modal-backdrop">
+  <div class="modal" id="create-modal">
+    <div class="modal-close" id="create-modal-close">✕</div>
+    <div id="create-modal-content">
+      <div class="modal-title" id="create-modal-title">Create account</div>
+      <div class="modal-body">
+        <form id="create-form">
+          <div class="form-group">
+            <label for="create-name" id="create-name-label">Name</label>
+            <input id="create-name" type="text" />
+          </div>
+          <div class="form-group">
+            <label for="create-age" id="create-age-label">Age</label>
+            <input id="create-age" type="number" inputmode="numeric" />
+          </div>
+          <div class="form-group">
+            <label for="create-dob" id="create-dob-label">Date of birth</label>
+            <input id="create-dob" type="text" placeholder="DD/MM/YYYY" />
+          </div>
+          <div class="form-group">
+            <label for="create-address" id="create-address-label">House address</label>
+            <input id="create-address" type="text" />
+          </div>
+          <div class="form-group">
+            <label for="create-pincode" id="create-pincode-label">Pin code</label>
+            <input id="create-pincode" type="tel" inputmode="numeric" />
+          </div>
+          <div class="form-group">
+            <label for="create-phone" id="create-phone-label">Phone number</label>
+            <input id="create-phone" type="tel" inputmode="tel" placeholder="10-digit mobile" />
+          </div>
+
+          <div class="form-group" style="margin-top: 4px;">
+            <button type="button" id="create-send-otp" class="modal-button" style="background:#2e7d32;">
+              SEND OTP
+            </button>
+          </div>
+
+          <div id="create-otp-status" style="min-height:1.1em;font-size:0.8rem;margin-top:4px;"></div>
+
+          <!-- PIN + confirm -->
+          <div class="form-group" style="margin-top:8px;">
+            <label for="create-pin" id="create-pin-label">PIN (6 digits)</label>
+            <input
+              id="create-pin"
+              type="password"
+              inputmode="numeric"
+              maxlength="6"
+              placeholder="••••••"
+            />
+          </div>
+          <div id="create-pin-error" class="warning"></div>
+
+          <div class="form-group" style="margin-top:8px;">
+            <label for="create-pin-confirm" id="create-pin-confirm-label">Re-enter PIN</label>
+            <input
+              id="create-pin-confirm"
+              type="password"
+              inputmode="numeric"
+              maxlength="6"
+              placeholder="••••••"
+            />
+          </div>
+
+          <div
+            id="create-enter-full"
+            style="min-height:1.1em;font-size:0.75rem;color:#ff5252;margin-top:2px;"
+          ></div>
+
+          <div
+            id="create-pin-ok"
+            style="min-height:1.1em;font-size:0.8rem;color:#4caf50;margin-top:2px;"
+          ></div>
+
+          <div id="create-form-warning" class="warning" style="margin-top:6px;"></div>
+
+          <button
+            type="button"
+            id="create-account-confirm-btn"
+            class="modal-button"
+            style="margin-top:10px;background:#1565c0;"
+          >
+            Create account
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- OTP dialog for create account -->
+<div id="otp-dialog-backdrop" class="modal-backdrop">
+  <div class="modal" id="otp-dialog">
+    <div class="modal-close" id="otp-dialog-close">✕</div>
+    <div class="modal-title" id="otp-dialog-title">Enter OTP</div>
+    <div class="modal-body">
+      <div class="modal-input">
+        <input
+          id="otp-input"
+          type="text"
+          inputmode="numeric"
+          maxlength="4"
+          placeholder="4-digit OTP"
+        />
+      </div>
+      <div class="modal-warning" id="otp-dialog-warning"></div>
+      <button class="modal-button" id="otp-dialog-verify-btn">
+        Verify
+      </button>
+    </div>
+  </div>
+</div>
+
+    <!-- Warning modal -->
+    <div id="warning-modal-backdrop" class="modal-backdrop">
+      <div class="modal" id="warning-modal">
+        <div class="modal-close" id="modal-close-btn">✕</div>
+        <div id="modal-content-form">
+          <div class="modal-title" id="modal-title-text">
+            Enter secret key to send warning to zone
+          </div>
+          <div class="modal-body">
+            <div class="modal-input">
+              <input
+                id="secret-key-input"
+                type="password"
+                maxlength="8"
+                placeholder="8-character secret key"
+              />
+            </div>
+            <div class="modal-warning" id="modal-warning-text"></div>
+            <button class="modal-button" id="modal-send-btn">
+              Send warning
+            </button>
+          </div>
+        </div>
+        <div id="modal-content-success" style="display: none;">
+          <div class="success-state">
+            <div class="success-tick">✔</div>
+            <div class="success-text" id="success-text-msg">
+              Warning sent successfully.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="script.js"></script>
+
+  </body>
+</html>
